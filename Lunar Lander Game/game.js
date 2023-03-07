@@ -14,7 +14,7 @@ function setup() {
   createCanvas(800, 600);
   background(0);
   yVal = 0;
-  velocity = 0;
+  velocity = 0.6;
   mass = 100;
   accelerate = mass * 0.01;
 }
@@ -25,11 +25,14 @@ function ufoShip(x, y) {
 }
 function draw() {
   clear();
-  if (ufoY >= 500) {
-    velocity += accelerate;
-    yVal += velocity;
-    ufoShip(width / 2, yVal, mass, mass);
-    if (yVal > height - mass / 2);
+
+  velocity += accelerate;
+  yVal += velocity;
+  ufoShip(width / 2, yVal, mass, mass);
+  if (yVal > height - mass / 2);
+  if (keyIsDown(32)) {
+    velocity = 3;
+    velocity = velocity - 0.3;
   }
 }
 function mousePressed() {
@@ -60,4 +63,4 @@ function draw() {
 }
 */
 
-console.log(speedY);
+console.log(velocity);

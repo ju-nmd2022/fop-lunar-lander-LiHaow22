@@ -1,6 +1,6 @@
 background(0, 7, 45);
-//let x = 200;
-//let y = 200;
+let x = 200;
+let y = 200;
 
 function ufoShip(x, y) {
   //Landing gear (triangles)
@@ -38,7 +38,6 @@ function ufoShip(x, y) {
   ellipse(x, y, 110, 20);
 
   //lines on top of hull
-
   stroke(255, 255, 255);
   line(x, y + 15, x, y + 30);
   line(x - 40, y + 12, x - 60, y + 25);
@@ -46,19 +45,15 @@ function ufoShip(x, y) {
   line(x - 60, y, x - 80, y + 2);
   line(x + 60, y, x + 80, y + 2);
 
-  /*push();
-
-  translate(200, 200);
-  rotate(3.14);
-  translate(-200, -200);
-  arc(x, y - 4, 90, 90, 0, PI);
-
-  pop();
-  */
+  //flight power(?)
+  stroke(246, 246, 211);
+  line(x - 50, y + 60, x - 60, y + 150);
+  line(x + 50, y + 60, x + 60, y + 150);
+  line(x, y + 100, x, y + 200);
+  line(x - 25, y + 80, x - 30, y + 250);
+  line(x + 25, y + 80, x + 30, y + 250);
 }
 
-let x = 200;
-let y = 200;
 function draw() {
   clear();
   ufoShip(x, y);

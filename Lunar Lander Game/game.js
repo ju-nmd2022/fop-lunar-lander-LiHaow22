@@ -2,7 +2,7 @@ let ufoX = 100;
 let ufoY = 100;
 let speedY = 6;
 let yVal;
-let velocity;
+let velocity = 0.6;
 let accelerate;
 let mass;
 let playingGame = true;
@@ -61,10 +61,13 @@ function ufoShip(x, y) {
   line(x + 40, y + 12, x + 60, y + 25);
   line(x - 60, y, x - 80, y + 2);
   line(x + 60, y, x + 80, y + 2);
+
+  stroke(255, 255, 255);
+  strokeWeight(1);
+  text("Velocity: " + velocity, 100, 100, 100, 100);
 }
 function draw() {
   clear();
-
   velocity += accelerate;
   yVal += velocity;
   ufoShip(width / 2, yVal, mass, mass);
@@ -78,7 +81,11 @@ function mousePressed() {
   yVal = 0;
   velocity = 0;
 }
-
+function succedScreen() {
+  if ((ufoY = 600)) {
+    succeedScreen = true;
+  }
+}
 /*function draw() {
   clear();
   ufoShip(ufoX, ufoY);

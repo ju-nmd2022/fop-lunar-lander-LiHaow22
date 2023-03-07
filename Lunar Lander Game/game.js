@@ -9,7 +9,7 @@ let playingGame = true;
 let startScreen = false;
 let succedScreen = false;
 let failedScreen = false;
-
+// Gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
 function setup() {
   createCanvas(800, 600);
   background(0);
@@ -25,22 +25,16 @@ function ufoShip(x, y) {
 }
 function draw() {
   clear();
-  velocity += accelerate;
-  yVal += velocity;
-  ufoShip(width / 2, yVal, mass, mass);
-  if (yVal > height - mass / 2);
+  if (ufoY >= 500) {
+    velocity += accelerate;
+    yVal += velocity;
+    ufoShip(width / 2, yVal, mass, mass);
+    if (yVal > height - mass / 2);
+  }
 }
 function mousePressed() {
   yVal = 0;
   velocity = 0;
-}
-function draw() {
-  playingGame = true;
-  if (playingGame) {
-    if (keyIsDown(32)) {
-      velocity = velocity - 1;
-    }
-  }
 }
 
 /*function draw() {
@@ -52,6 +46,15 @@ function draw() {
   if (playingGame) {
     if (keyIsDown(32)) {
       speedY = speedY - 1;
+    }
+  }
+}
+NEWER
+function draw() {
+  playingGame = true;
+  if (playingGame) {
+    if (keyIsDown(32)) {
+      velocity = velocity - 1;
     }
   }
 }

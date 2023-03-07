@@ -9,16 +9,30 @@ function ufoShip(x, y) {
 }
 let ufoX = 100;
 let ufoY = 100;
-let thrustY = 2;
+let speedY = 7;
+let speed = 1;
+let playingGame = true;
+let startScreen = false;
+let succedScreen = false;
+let failedScreen = false;
+
 function draw() {
   clear();
   ufoShip(ufoX, ufoY);
-  //y = y + 5;
-  //x = x + 5;
-}
+  ufoX = ufoX + thrustX;
+  ufoY = ufoY + thrustY;
 
-if (playingGame) {
-  if (keyIsPressed(32)) {
-    thrustY = -1;
+  let playingGame = true;
+  if (playingGame) {
+    if (keyIsDown(32)) {
+      speed = speed + 1;
+    }
   }
 }
+
+if (isGameActive) {
+  if (keyIsDown(38)) {
+  } else {
+  }
+}
+console.log(velocity);

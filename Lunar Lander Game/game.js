@@ -1,22 +1,85 @@
 let ufoX = 100;
 let ufoY = 100;
-let speedY = 6;
-let yVal;
+let speedY = 0;
+let yVal = 30;
 let velocity = 0.6;
 let acceleration;
 let mass;
-let playingGame = true;
-let startScreen = false;
-let succeedScreen = false;
-let failedScreen = false;
+let startingGame = true;
+let playingGame = false;
+let endGame = false;
+
+let state = "start";
+
 // Gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
 function setup() {
   createCanvas(800, 600);
   background(0);
   yVal = 0;
-  velocity = 0.7;
+  //velocity = 0.7;
   mass = 100;
   acceleration = mass * 0.01;
+}
+
+function startScreen() {
+  fill(255, 255, 255);
+  textFont("futura");
+  textSize(15);
+  text(
+    "Start the game by clicking. Control the ufo by pressing the spacebar, try to land as smoothly as possible! Good luck (:",
+    100,
+    100
+  );
+}
+function playingScreen() {}
+function succeedScreen() {
+  text(
+    "Congratulations! You landed safely on Planet Whatevah! Good job!",
+    100,
+    100
+  );
+}
+function failedScreen() {}
+
+function draw() {
+  if (state === "start") {
+    startScreen();
+  } else if (state === "playing") {
+    playingScreen();
+    startingGame = false;
+    playingGame = true;
+    endGame = false;
+  } else if (state === "end") {
+    if (end === "failed") {
+      text(
+        "If you expect that harsh landing to work, hate to break it to you, it won't. Click wherever to start over.",
+        100,
+        100
+      );
+    }
+    if (end === "succeed") {
+      ufoShip(200, 550, keyIsDown(32));
+
+      text("Congratulations! You landed safely.", 200, 240);
+    }
+  }
+}
+
+function keyTyped() {
+  if (key === "s")
+    if (state === "start") {
+      state = "playing";
+      speedY = 0;
+      yVal = 30;
+      velocity = 0.1;
+    } else if (state === "game") {
+      state = "end";
+    } else if (state === "end") {
+      state = "game";
+      speedY = 0;
+      yVal = 30;
+      velocity = 0.1;
+    }
 }
 
 function ufoShip(x, y) {
@@ -73,6 +136,7 @@ function ufoShip(x, y) {
 
   stroke(255, 255, 255);
   strokeWeight(1);
+  textFont("futura");
   text("Velocity: " + velocity, 100, 100, 100, 100);
   text("Acceleration: " + acceleration, 100, 120, 100, 100);
 }
@@ -83,8 +147,10 @@ function draw() {
   ufoShip(width / 2, yVal, mass, mass);
   if (yVal > height - mass / 2);
   if (keyIsDown(32)) {
-    velocity = 3;
-    velocity = velocity - 0.5;
+    //velocity = 3;
+    velocity = velocity - 2;
+  }
+  if (state) {
   }
 }
 function mousePressed() {

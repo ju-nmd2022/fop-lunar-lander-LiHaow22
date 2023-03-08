@@ -10,7 +10,7 @@ let playingGame = false;
 let endGame = false;
 let bg;
 let end;
-let state = "playing";
+let state = "start";
 
 // Gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
 function setup() {
@@ -18,21 +18,17 @@ function setup() {
   createCanvas(972, 600);
   background(0);
   mass = 100;
-  acceleration = mass * 0.01;
+  acceleration = mass * 0.005;
 }
 
 function startScreen() {
+  background(bg);
   fill(255, 255, 255);
   textFont("arial");
-  textSize(15);
-  text(
-    "Start the game by clicking. Control the ufo by pressing the spacebar, try to land as smoothly as possible! Good luck (:",
-    100,
-    100
-  );
-}
-function startScreen() {
-  background(bg);
+  textSize(20);
+  text("Welcome! Control the ufo by pressing the spacebar,", 100, 150);
+  text("try to land as smooth as possible.", 100, 175);
+  text("Press 'S' to start, good luck! (:", 100, 200);
 }
 function playingScreen() {
   background(bg);
@@ -128,7 +124,6 @@ function draw() {
     yVal += velocity;
     ufoShip(width / 2, yVal, mass, mass);
     if (keyIsDown(32)) {
-      //velocity = 3;
       velocity = velocity - 2;
     }
   } else if (state === "end") {
@@ -137,11 +132,9 @@ function draw() {
     endGame = true;
     if (end === "failed") {
       failedScreen();
-      text(
-        "If you expect that harsh landing to work, hate to break it to you, it won't. Press 'S' to start over.",
-        100,
-        100
-      );
+      text("If you expect that harsh landing to work,", 100, 150);
+      text("hate to break it to you, it won't.", 100, 175);
+      text("Press 'S' to start over.", 100, 200);
     }
     if (end === "succeed") {
       ufoShip(width / 2, 500, keyIsDown(32));
@@ -149,7 +142,7 @@ function draw() {
       noStroke();
       textSize(20);
       textFont("arial");
-      text("Congratulations! You landed safely.", 150, 240);
+      text("Congratulations! You landed safely.", 100, 150);
     }
   }
   if (playingScreen) {

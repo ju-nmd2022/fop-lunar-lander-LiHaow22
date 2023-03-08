@@ -63,8 +63,19 @@ function draw() {
       text("Congratulations! You landed safely.", 200, 240);
     }
   }
+  if (playingScreen)
+    if (state === "game" && yVal >= 550 && speedY <= 5) {
+      yVal = 590;
+      state = "result";
+      result = "won";
+    } else if (state === "game" && yVal >= 550 && speedY > 5) {
+      state = "result";
+      result = "crashed";
+      yVal = 590;
+    } else if (state === "game") {
+      result = "restart";
+    }
 }
-
 function keyTyped() {
   if (key === "s")
     if (state === "start") {
@@ -157,32 +168,5 @@ function mousePressed() {
   yVal = 0;
   velocity = 0;
 }
-/*function playingGame() {
-  if ((y = 600)) {
-    succeedScreen = true;
-  }
-}
-/*function draw() {
-  clear();
-  ufoShip(ufoX, ufoY);
-  ufoY = ufoY + speedY;
-
-  playingGame = true;
-  if (playingGame) {
-    if (keyIsDown(32)) {
-      speedY = speedY - 1;
-    }
-  }
-}
-NEWER
-function draw() {
-  playingGame = true;
-  if (playingGame) {
-    if (keyIsDown(32)) {
-      velocity = velocity - 1;
-    }
-  }
-}
-*/
 
 console.log(velocity);

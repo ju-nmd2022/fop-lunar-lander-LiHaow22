@@ -8,8 +8,8 @@ let mass;
 let startingGame = true;
 let playingGame = false;
 let endGame = false;
-
-let state = "start";
+let end;
+let state = "playing";
 
 // Gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
 function setup() {
@@ -34,6 +34,11 @@ function startScreen() {
 }
 function playingScreen() {
   background(0, 0, 255);
+  stroke(255, 255, 255);
+  strokeWeight(1);
+  textFont("futura");
+  text("Velocity: " + velocity, 100, 100, 100, 100);
+  text("Acceleration: " + acceleration, 100, 120, 100, 100);
 }
 function succeedScreen() {
   background(0, 255, 0);
@@ -42,42 +47,6 @@ function failedScreen() {
   background(255, 0, 0);
 }
 
-function draw() {
-  if (state === "start") {
-    startScreen();
-  } else if (state === "playing") {
-    playingScreen();
-    startingGame = false;
-    playingGame = true;
-    endGame = false;
-  } else if (state === "end") {
-    if (end === "failed") {
-      text(
-        "If you expect that harsh landing to work, hate to break it to you, it won't. Press 'S' to start over.",
-        100,
-        100
-      );
-    }
-    if (end === "succeed") {
-      ufoShip(200, 550, keyIsDown(32));
-
-      text("Congratulations! You landed safely.", 200, 240);
-    }
-  }
-  if (playingScreen)
-    if (state === "playing" && yVal >= 550 && speedY <= 5) {
-      yVal = 590;
-      state = "end";
-      result = "succeed";
-    } else if (state === "playing" && yVal >= 550 && speedY > 5) {
-      state = "end";
-      result = "crashed";
-      yVal = 590;
-    } else if (state === "playing" && yVal <= 0);
-  {
-    text("You flew too far!", 100, 100);
-  }
-}
 function keyTyped() {
   if (key === "s")
     if (state === "start") {
@@ -146,26 +115,61 @@ function ufoShip(x, y) {
     line(x - 25, y + 80, x - 30, y + 200);
     line(x + 25, y + 80, x + 30, y + 200);
   }
-
-  stroke(255, 255, 255);
-  strokeWeight(1);
-  textFont("futura");
-  text("Velocity: " + velocity, 100, 100, 100, 100);
-  text("Acceleration: " + acceleration, 100, 120, 100, 100);
 }
+
 function draw() {
-  clear();
-  velocity += acceleration; //gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
-  yVal += velocity;
-  ufoShip(width / 2, yVal, mass, mass);
-  if (keyIsDown(32)) {
-    //velocity = 3;
-    velocity = velocity - 2;
+  if (state === "start") {
+    startScreen();
+  } else if (state === "playing") {
+    playingScreen();
+    startingGame = false;
+    playingGame = true;
+    endGame = false;
+    clear();
+    velocity += acceleration; //gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
+    yVal += velocity;
+    ufoShip(width / 2, yVal, mass, mass);
+    if (keyIsDown(32)) {
+      //velocity = 3;
+      velocity = velocity - 2;
+    }
+  } else if (state === "end") {
+    startingGame = false;
+    playingGame = false;
+    endGame = true;
+    if (end === "failed") {
+      failedScreen();
+      text(
+        "If you expect that harsh landing to work, hate to break it to you, it won't. Press 'S' to start over.",
+        100,
+        100
+      );
+    }
+    if (end === "succeed") {
+      ufoShip(width / 2, 550, keyIsDown(32));
+      stroke(255, 255, 255);
+      strokeWeight(1);
+      noStroke();
+      textFont("futura");
+      text("Congratulations! You landed safely.", 200, 240);
+    }
   }
-  if (state) {
+  if (playingScreen) {
+    if (state === "playing" && yVal >= 550 && velocity <= 5) {
+      yVal = 590;
+      state = "end";
+      end = "succeed";
+    } else if (state === "playing" && yVal >= 550 && velocity > 5) {
+      state = "end";
+      end = "failed";
+      yVal = 590;
+    } else if (state === "playing" && yVal <= 0) {
+      text("You flew too far!", 100, 100);
+    }
   }
 }
 function mousePressed() {
+  state = "playing";
   yVal = 0;
   velocity = 0;
 }

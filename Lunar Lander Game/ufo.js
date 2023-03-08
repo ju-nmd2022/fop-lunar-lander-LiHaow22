@@ -47,11 +47,11 @@ function ufoShip(x, y) {
 
   //flight power(?)
   stroke(246, 246, 211);
-  line(x - 50, y + 60, x - 60, y + 150);
-  line(x + 50, y + 60, x + 60, y + 150);
-  line(x, y + 100, x, y + 200);
-  line(x - 25, y + 80, x - 30, y + 250);
-  line(x + 25, y + 80, x + 30, y + 250);
+  line(x - 50, y + 60, x - 60, y + 120);
+  line(x + 50, y + 60, x + 60, y + 120);
+  line(x, y + 100, x, y + 170);
+  line(x - 25, y + 80, x - 30, y + 200);
+  line(x + 25, y + 80, x + 30, y + 200);
 }
 
 function draw() {

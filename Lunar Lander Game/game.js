@@ -3,20 +3,20 @@ let ufoY = 100;
 let speedY = 6;
 let yVal;
 let velocity = 0.6;
-let accelerate;
+let acceleration;
 let mass;
 let playingGame = true;
 let startScreen = false;
-let succedScreen = false;
+let succeedScreen = false;
 let failedScreen = false;
 // Gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
 function setup() {
   createCanvas(800, 600);
   background(0);
   yVal = 0;
-  velocity = 0.6;
+  velocity = 0.7;
   mass = 100;
-  accelerate = mass * 0.01;
+  acceleration = mass * 0.01;
 }
 
 function ufoShip(x, y) {
@@ -62,27 +62,37 @@ function ufoShip(x, y) {
   line(x - 60, y, x - 80, y + 2);
   line(x + 60, y, x + 80, y + 2);
 
+  if (keyIsDown(32)) {
+    stroke(246, 246, 211);
+    line(x - 50, y + 60, x - 60, y + 120);
+    line(x + 50, y + 60, x + 60, y + 120);
+    line(x, y + 100, x, y + 170);
+    line(x - 25, y + 80, x - 30, y + 200);
+    line(x + 25, y + 80, x + 30, y + 200);
+  }
+
   stroke(255, 255, 255);
   strokeWeight(1);
   text("Velocity: " + velocity, 100, 100, 100, 100);
+  text("Acceleration: " + acceleration, 100, 120, 100, 100);
 }
 function draw() {
   clear();
-  velocity += accelerate;
+  velocity += acceleration; //gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
   yVal += velocity;
   ufoShip(width / 2, yVal, mass, mass);
   if (yVal > height - mass / 2);
   if (keyIsDown(32)) {
     velocity = 3;
-    velocity = velocity - 0.3;
+    velocity = velocity - 0.5;
   }
 }
 function mousePressed() {
   yVal = 0;
   velocity = 0;
 }
-function succedScreen() {
-  if ((ufoY = 600)) {
+/*function playingGame() {
+  if ((y = 600)) {
     succeedScreen = true;
   }
 }

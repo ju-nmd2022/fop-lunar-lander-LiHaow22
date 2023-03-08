@@ -2,7 +2,7 @@ let ufoX = 100;
 let ufoY = 100;
 let speedY = 0;
 let yVal = 30;
-let velocity = 0.6;
+let velocity = 0;
 let acceleration;
 let mass;
 let startingGame = true;
@@ -15,8 +15,6 @@ let state = "start";
 function setup() {
   createCanvas(800, 600);
   background(0);
-  yVal = 0;
-  //velocity = 0.7;
   mass = 100;
   acceleration = mass * 0.01;
 }
@@ -31,15 +29,18 @@ function startScreen() {
     100
   );
 }
-function playingScreen() {}
-function succeedScreen() {
-  text(
-    "Congratulations! You landed safely on Planet Whatevah! Good job!",
-    100,
-    100
-  );
+function startScreen() {
+  background(255, 255, 0);
 }
-function failedScreen() {}
+function playingScreen() {
+  background(0, 0, 255);
+}
+function succeedScreen() {
+  background(0, 255, 0);
+}
+function failedScreen() {
+  background(255, 0, 0);
+}
 
 function draw() {
   if (state === "start") {
@@ -52,7 +53,7 @@ function draw() {
   } else if (state === "end") {
     if (end === "failed") {
       text(
-        "If you expect that harsh landing to work, hate to break it to you, it won't. Click wherever to start over.",
+        "If you expect that harsh landing to work, hate to break it to you, it won't. Press 'S' to start over.",
         100,
         100
       );
@@ -64,17 +65,18 @@ function draw() {
     }
   }
   if (playingScreen)
-    if (state === "game" && yVal >= 550 && speedY <= 5) {
+    if (state === "playing" && yVal >= 550 && speedY <= 5) {
       yVal = 590;
-      state = "result";
-      result = "won";
-    } else if (state === "game" && yVal >= 550 && speedY > 5) {
-      state = "result";
+      state = "end";
+      result = "succeed";
+    } else if (state === "playing" && yVal >= 550 && speedY > 5) {
+      state = "end";
       result = "crashed";
       yVal = 590;
-    } else if (state === "game") {
-      result = "restart";
-    }
+    } else if (state === "playing" && yVal <= 0);
+  {
+    text("You flew too far!", 100, 100);
+  }
 }
 function keyTyped() {
   if (key === "s")
@@ -83,10 +85,10 @@ function keyTyped() {
       speedY = 0;
       yVal = 30;
       velocity = 0.1;
-    } else if (state === "game") {
+    } else if (state === "playing") {
       state = "end";
     } else if (state === "end") {
-      state = "game";
+      state = "playing";
       speedY = 0;
       yVal = 30;
       velocity = 0.1;
@@ -156,7 +158,6 @@ function draw() {
   velocity += acceleration; //gravity thanks to https://editor.p5js.org/dansakamoto/sketches/S1J_MEXYm
   yVal += velocity;
   ufoShip(width / 2, yVal, mass, mass);
-  if (yVal > height - mass / 2);
   if (keyIsDown(32)) {
     //velocity = 3;
     velocity = velocity - 2;
